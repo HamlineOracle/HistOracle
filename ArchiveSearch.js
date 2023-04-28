@@ -12,6 +12,22 @@ let d = date.getDate();
 let searchDepth = 200;
 let results = 10;
 
+if (window.location.search) {
+  let urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("month")) {
+    m = urlParams.get("month");
+  }
+  if (urlParams.get("day")) {
+    d = urlParams.get("day");
+  }
+  if (urlParams.get("depth")) {
+    searchDepth = urlParams.get("depth");
+  }
+  if (urlParams.get("results")) {
+    results = urlParams.get("results");
+  }
+}
+
 let objs = [];
 let pdfs = {};
 let imgs = {};
@@ -99,5 +115,3 @@ $.getJSON("OracleArchives.json", function (data) {
       });
     }
   });
-
-console.log("it works!");
