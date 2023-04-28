@@ -51,7 +51,7 @@ let compareMonth = function (month, returnCount) {
   let dist;
   for (let i = 0; i < months.length; i++) {
     dist = Math.abs(month - months[i]);
-    if (dist <= (d > 25 || d < 5)) {
+    if (dist == 0) {
       match.push(i);
     }
     if (match.length >= returnCount) {
@@ -64,10 +64,8 @@ let compareMonth = function (month, returnCount) {
 let dayOrder = function (day) {
   diff = {};
   for (let i = 0; i < matchList.length; i++) {
-    let dayAdjustment =
-      (months[matchList[i]] == m + 1) * -30 +
-      (months[matchList[i]] == m - 1) * 30;
-    diff[matchList[i]] = Math.abs(day + dayAdjustment - days[matchList[i]]);
+    //let dayAdjustment = (m - months[matchList[i]]) * 30;
+    diff[matchList[i]] = Math.abs(day - days[matchList[i]]);
   }
   matchList.sort((a, b) => diff[a] - diff[b]);
 };
