@@ -2,7 +2,8 @@
 <html lang="">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=1.0, user-scalable=no;" />
+
 
     <title>This Week in Oracle History</title>
     <link
@@ -55,7 +56,7 @@
         margin: 0 auto;
         padding-bottom: 35px;
         width: min(40vw, 200px);
-        border-bottom: solid black 1px;
+        border-bottom: solid lightslategray 1px;
         display: table;
       }
       .issue {
@@ -81,6 +82,7 @@
         text-decoration: none;
         font-size: 2vh;
       }
+      #submitbtn {display: none;}
     </style>
   </head>
 </html>
@@ -96,5 +98,22 @@
     <a href="https://hamlineoracle.github.io/HistOracle/?shuffle=true"
       >Shuffle</a
     >
+    &nbsp; &nbsp;
+  </br>  </br>
+  <p id="errorMessage" style="font-size: 1.5vh;"></p>
+
+    <form id="customDate" onsubmit=
+    'cDate = document.getElementById("cDate").value;
+    if (cDate.value.length <= 5) {
+      [m, d] = cDate.value.split("/");   
+      window.location.href = `https://hamlineoracle.github.io/HistOracle/?month=${m}&day=${d}`;
+    } else {
+      document.getElementById("errorMessage").innerHTML = "Error. Please make sure to enter a date</br>in the format Month/Year</br></br>"
+    }
+    return false;'>
+      <label for="cDate">Custom Date (MM/DD):</label>
+      <input id="cDate" type="text" />
+      <input type="submit" id="submitbtn"  />
+    </form>
   </div>
 </body>

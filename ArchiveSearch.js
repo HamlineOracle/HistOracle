@@ -41,6 +41,19 @@ function rdate() {
   d = Math.floor(Math.random() * 30 + 1);
 }
 
+function upDate(cDate) {
+  if (cDate.length == 0 || true) {
+    cDate = document.getElementById("cDate").value;
+    console.log(cDate);
+    return false;
+  }
+  if (cDate.length <= 5) {
+    [m, d] = cDate.split("/");
+  }
+  window.location.href = `https://hamlineoracle.github.io/HistOracle/?month=${m}&day=${d}`;
+  return false;
+}
+
 if (random) {
   rdate();
 }
