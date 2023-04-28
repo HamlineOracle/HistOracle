@@ -11,6 +11,8 @@ let m = date.getMonth() + 1;
 let d = date.getDate();
 let searchDepth = 300;
 let results = 10;
+let shuffle = false;
+let random = false;
 
 if (window.location.search) {
   let urlParams = new URLSearchParams(window.location.search);
@@ -26,6 +28,21 @@ if (window.location.search) {
   if (urlParams.get("results")) {
     results = urlParams.get("results");
   }
+  if (urlParams.get("shuffle") == "true") {
+    shuffle = true;
+  }
+  if (urlParams.get("random") == "true") {
+    random = true;
+  }
+}
+
+function rdate() {
+  m = Math.floor(Math.random() * 12 + 1);
+  d = Math.floor(Math.random() * 30 + 1);
+}
+
+if (random) {
+  rdate();
 }
 
 let objs = [];
@@ -51,7 +68,7 @@ let compareMonth = function (month, returnCount) {
   let dist;
   for (let i = 0; i < months.length; i++) {
     dist = Math.abs(month - months[i]);
-    if (dist == 0) {
+    if (dist <= 0 + +shuffle * 6) {
       match.push(i);
     }
     if (match.length >= returnCount) {
@@ -67,7 +84,9 @@ let dayOrder = function (day) {
     //let dayAdjustment = (m - months[matchList[i]]) * 30;
     diff[matchList[i]] = Math.abs(day - days[matchList[i]]);
   }
-  matchList.sort((a, b) => diff[a] - diff[b]);
+  if (!shuffle) {
+    matchList.sort((a, b) => diff[a] - diff[b]);
+  }
 };
 
 $.getJSON("OracleArchives.json", function (data) {

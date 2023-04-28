@@ -74,6 +74,13 @@
         display: inline-block;
         padding: 0;
       }
+      #linkRow {
+        width: min(100vw, 400px);
+        margin: 10 auto 5 auto;
+        display: block;
+        text-decoration: none;
+        font-size: 2vh;
+      }
     </style>
   </head>
 </html>
@@ -81,4 +88,13 @@
 <body>
   <h1>This Week in Oracle History</h1>
   <div id="resultsContainer"></div>
+  <div id="linkRow">
+    <a href="https://hamlineoracle.github.io/HistOracle/?random=true"
+      >Random Date</a
+    >
+    &nbsp; &nbsp;
+    <a href="https://hamlineoracle.github.io/HistOracle/?shuffle=true"
+      >Shuffle</a
+    >
+  </div>
 </body>
