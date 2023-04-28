@@ -3,12 +3,13 @@ let archive;
 let months = [];
 let days = [];
 let matchList;
+let diff;
 
 let date = new Date();
 
 let m = date.getMonth() + 1;
 let d = date.getDate();
-let searchDepth = 40;
+let searchDepth = 200;
 let results = 10;
 
 let objs = [];
@@ -45,7 +46,7 @@ let compareMonth = function (month, returnCount) {
 };
 
 let dayOrder = function (day) {
-  let diff = {};
+  diff = {};
   for (let i = 0; i < matchList.length; i++) {
     diff[matchList[i]] = Math.abs(day - days[matchList[i]]);
   }
