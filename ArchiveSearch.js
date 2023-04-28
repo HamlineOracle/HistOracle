@@ -9,7 +9,7 @@ let date = new Date();
 
 let m = date.getMonth() + 1;
 let d = date.getDate();
-let searchDepth = 200;
+let searchDepth = 300;
 let results = 10;
 
 if (window.location.search) {
@@ -51,7 +51,7 @@ let compareMonth = function (month, returnCount) {
   let dist;
   for (let i = 0; i < months.length; i++) {
     dist = Math.abs(month - months[i]);
-    if (dist == 0) {
+    if (dist <= (d > 25 || d < 5)) {
       match.push(i);
     }
     if (match.length >= returnCount) {
@@ -64,7 +64,10 @@ let compareMonth = function (month, returnCount) {
 let dayOrder = function (day) {
   diff = {};
   for (let i = 0; i < matchList.length; i++) {
-    diff[matchList[i]] = Math.abs(day - days[matchList[i]]);
+    let dayAdjustment =
+      (months[matchList[i]] == m + 1) * -30 +
+      (months[matchList[i]] == m - 1) * 30;
+    diff[matchList[i]] = Math.abs(day + dayAdjustment - days[matchList[i]]);
   }
   matchList.sort((a, b) => diff[a] - diff[b]);
 };
@@ -97,15 +100,16 @@ $.getJSON("OracleArchives.json", function (data) {
       //output.push(archive[i]);
       let x = getIMG(i);
       x.then(function (resp) {
-        //console.log(resp);
-        pdfs[i] =
-          "https://cdm16120.contentdm.oclc.org/digital" + resp["downloadUri"];
+        console.log(resp);
+        pdfs[
+          i
+        ] = `https://cdm16120.contentdm.oclc.org/digital/custom/BookReader?manifest=https://cdm16120.contentdm.oclc.org//digital/iiif-info/p16120coll52/${resp["parentId"]}/manifest.json`;
         imgs[i] = resp["imageUri"];
       }).then(function () {
         rc.innerHTML += `<div class="result"><p class="issue">Oracle ${
           archive[i]["Year"]
         }-${archive[i]["Month"]}${
-          (archive[i]["Day"] > 0) * ("-" + archive[i]["Day"])
+          ["", "-" + archive[i]["Day"]][+(archive[i]["Day"] > 0)]
         } </br><a class="archLink" href=${
           archive[i]["Link"]
         }> Archives Page</a></p> </br> <a href=${pdfs[i]}><img src=${
